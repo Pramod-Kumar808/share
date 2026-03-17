@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Pramod - UPSC 2028 Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#0d0f14;--bg2:#13161e;--bg3:#1a1e2a;
+  --gold:#c9a84c;--gold2:#e8cc7a;
+  --red:#e05a5a;--green:#4caf7d;--blue:#5a8de0;--purple:#9d6ef5;
+  --text:#e8e4d9;--muted:#8a8577;
+  --border:rgba(201,168,76,0.18);--card:rgba(255,255,255,0.03);
+  --sidebar-w:260px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Source Serif 4',serif;font-size:16px;line-height:1.8;overflow-x:hidden;}
+
+/* ── TOP NAV ── */
+#topnav{
+  position:fixed;top:0;left:0;right:0;z-index:200;height:52px;
+  background:rgba(13,15,20,0.95);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 1.5rem;gap:1rem;
+}
+.nav-brand{font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;color:var(--gold);white-space:nowrap;}
+.nav-badge{
+  font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;
+  padding:0.2rem 0.7rem;border-radius:100px;
+  background:rgba(224,90,90,0.12);border:1px solid rgba(224,90,90,0.3);color:#e07a7a;
+}
+.nav-badge.green{background:rgba(76,175,125,0.12);border-color:rgba(76,175,125,0.3);color:#6fcf8f;}
+#sidebar-toggle{
+  margin-left:auto;background:none;border:1px solid var(--border);
+  color:var(--muted);cursor:pointer;border-radius:6px;
+  padding:0.3rem 0.6rem;font-size:1rem;transition:all 0.2s;
+}
+#sidebar-toggle:hover{border-color:var(--gold);color:var(--gold);}
+
+/* ── LAYOUT ── */
+#layout{display:flex;padding-top:52px;}
+
+/* ── SIDEBAR ── */
+#sidebar{
+  position:fixed;top:52px;left:0;bottom:0;
+  width:var(--sidebar-w);
+  background:var(--bg2);border-right:1px solid var(--border);
+  overflow-y:auto;z-index:150;
+  transition:transform 0.3s ease;
+  scrollbar-width:thin;scrollbar-color:var(--border) transparent;
+}
+#sidebar::-webkit-scrollbar{width:4px;}
+#sidebar::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+#sidebar.hidden{transform:translateX(-100%);}
+
+.sb-header{padding:1.2rem 1rem 0.6rem;font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;color:var(--gold);text-transform:uppercase;}
+.sb-item{
+  display:flex;align-items:center;gap:0.6rem;
+  padding:0.55rem 1rem;font-size:0.82rem;color:var(--muted);
+  text-decoration:none;cursor:pointer;transition:all 0.15s;
+  border-left:2px solid transparent;
+  font-family:'Source Serif 4',serif;
+}
+.sb-item:hover{color:var(--text);background:rgba(255,255,255,0.03);border-left-color:var(--border);}
+.sb-item.active{color:var(--gold);background:rgba(201,168,76,0.06);border-left-color:var(--gold);}
+.sb-item .sb-icon{font-size:0.85rem;width:18px;text-align:center;flex-shrink:0;}
+.sb-divider{height:1px;background:var(--border);margin:0.4rem 0;}
+
+/* ── MAIN CONTENT ── */
+#main{
+  flex:1;min-width:0;
+  margin-left:var(--sidebar-w);
+  transition:margin-left 0.3s ease;
+}
+#main.full{margin-left:0;}
+@media(max-width:900px){
+  #sidebar{transform:translateX(-100%);}
+  #sidebar.visible{transform:translateX(0);}
+  #main{margin-left:0;}
+}
+
+/* ── PROGRESS BAR ── */
+#pgbar{position:fixed;top:52px;left:0;height:2px;background:linear-gradient(to right,var(--gold),var(--purple));z-index:300;transition:width 0.1s;}
+
+/* ── HERO ── */
+.hero{
+  min-height:88vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:5rem 2rem 3rem;position:relative;overflow:hidden;
+}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(201,168,76,0.07) 0%,transparent 70%),radial-gradient(ellipse 50% 40% at 20% 80%,rgba(90,141,224,0.05) 0%,transparent 60%);}
+.hero-badge{display:inline-flex;align-items:center;gap:0.5rem;border:1px solid var(--border);border-radius:100px;padding:0.3rem 1rem;margin-bottom:1.8rem;font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:var(--gold);letter-spacing:0.12em;background:rgba(201,168,76,0.05);animation:fadeDown 0.8s ease both;}
+.hero-badge::before{content:'●';font-size:0.5rem;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-16px);}to{opacity:1;transform:none;}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;}}
+h1.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,4.2rem);font-weight:900;line-height:1.1;max-width:860px;margin-bottom:1.2rem;background:linear-gradient(135deg,#fff 0%,var(--gold2) 50%,#c9a84c 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:fadeUp 0.9s 0.2s ease both;}
+.hero-sub{font-size:1rem;color:var(--muted);max-width:580px;animation:fadeUp 0.9s 0.4s ease both;margin-bottom:2.5rem;}
+.hero-stats{display:flex;gap:2.5rem;flex-wrap:wrap;justify-content:center;animation:fadeUp 0.9s 0.6s ease both;}
+.stat{text-align:center;}
+.stat-num{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--gold);display:block;}
+.stat-label{font-size:0.7rem;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:0.08em;}
+
+/* ── WORKER BANNER ── */
+.worker-banner{
+  background:linear-gradient(135deg,rgba(224,90,90,0.08),rgba(201,168,76,0.06));
+  border:1px solid rgba(224,90,90,0.25);border-radius:16px;
+  padding:1.5rem 2rem;margin:2rem 0;
+  display:grid;grid-template-columns:auto 1fr;gap:1.5rem;align-items:center;
+}
+.worker-banner .wb-icon{font-size:2.5rem;}
+.worker-banner h3{font-family:'Playfair Display',serif;font-size:1.2rem;color:#fff;margin-bottom:0.4rem;}
+.worker-banner p{font-size:0.88rem;color:#bbb;margin:0;}
+
+/* ── SECTION ── */
+section{padding:4rem 2.5rem;max-width:960px;margin:0 auto;}
+.section-label{font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--gold);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:0.6rem;display:flex;align-items:center;gap:0.5rem;}
+.section-label::before{content:'';display:inline-block;width:20px;height:1px;background:var(--gold);}
+h2{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700;line-height:1.2;margin-bottom:1rem;color:#fff;}
+h3{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--gold2);margin-bottom:0.5rem;}
+p{color:var(--text);margin-bottom:1rem;}
+
+/* ── CARDS GRID ── */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.5rem;transition:transform 0.25s,border-color 0.25s;}
+.card:hover{transform:translateY(-3px);border-color:rgba(201,168,76,0.35);}
+.card .c-icon{font-size:1.6rem;margin-bottom:0.7rem;display:block;}
+.card h4{font-family:'Playfair Display',serif;font-size:1rem;color:#fff;margin-bottom:0.4rem;}
+.card p{font-size:0.83rem;color:var(--muted);margin:0;}
+
+/* ── COLORED TOP CARDS ── */
+.card.c-history::before,.card.c-geo::before,.card.c-polity::before,.card.c-eco::before,.card.c-env::before,.card.c-ethics::before,.card.c-sci::before,.card.c-essay::before{content:'';display:block;height:3px;border-radius:12px 12px 0 0;margin:-1.5rem -1.5rem 1rem;border-radius:13px 13px 0 0;}
+.card.c-history::before{background:linear-gradient(90deg,#e05a5a,#f08060);}
+.card.c-geo::before{background:linear-gradient(90deg,#4caf7d,#2eb8a0);}
+.card.c-polity::before{background:linear-gradient(90deg,#5a8de0,#4099e0);}
+.card.c-eco::before{background:linear-gradient(90deg,#c9a84c,#e8cc7a);}
+.card.c-env::before{background:linear-gradient(90deg,#4caf7d,#8bc34a);}
+.card.c-ethics::before{background:linear-gradient(90deg,#9d6ef5,#c084fc);}
+.card.c-sci::before{background:linear-gradient(90deg,#5a8de0,#9d6ef5);}
+.card.c-essay::before{background:linear-gradient(90deg,#e8cc7a,#c9a84c);}
+
+/* ── BOOK LIST ── */
+.book-list{list-style:none;margin-top:0.8rem;}
+.book-list li{font-size:0.82rem;color:#bbb;padding:0.22rem 0;border-bottom:1px solid rgba(255,255,255,0.04);display:flex;align-items:flex-start;gap:0.4rem;}
+.book-list li::before{content:'📖';font-size:0.68rem;margin-top:0.15rem;flex-shrink:0;}
+
+/* ── RESOURCE LINKS ── */
+.res-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;}
+.res-card{
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:1.1rem 1.3rem;transition:border-color 0.2s,transform 0.2s;
+}
+.res-card:hover{border-color:rgba(90,141,224,0.4);transform:translateY(-2px);}
+.res-card a{text-decoration:none;display:block;}
+.res-card .res-tag{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.12em;color:var(--blue);margin-bottom:0.4rem;display:block;}
+.res-card h4{font-size:0.9rem;color:#fff;margin-bottom:0.3rem;transition:color 0.2s;}
+.res-card:hover h4{color:var(--blue);}
+.res-card p{font-size:0.78rem;color:var(--muted);margin:0;}
+.res-card .res-arrow{color:var(--blue);font-size:0.75rem;float:right;margin-top:-1.4rem;}
+
+/* ── ALERTS ── */
+.alert{border-radius:12px;padding:1.1rem 1.4rem;margin:1.3rem 0;display:flex;gap:0.9rem;align-items:flex-start;}
+.alert.warn{background:rgba(224,90,90,0.08);border:1px solid rgba(224,90,90,0.25);}
+.alert.tip{background:rgba(76,175,125,0.08);border:1px solid rgba(76,175,125,0.25);}
+.alert.info{background:rgba(90,141,224,0.08);border:1px solid rgba(90,141,224,0.25);}
+.alert.gold{background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.25);}
+.alert-icon{font-size:1.3rem;flex-shrink:0;}
+.alert-body h4{font-size:0.85rem;margin-bottom:0.25rem;font-family:'JetBrains Mono',monospace;letter-spacing:0.06em;}
+.alert.warn .alert-body h4{color:var(--red);}
+.alert.tip .alert-body h4{color:var(--green);}
+.alert.info .alert-body h4{color:var(--blue);}
+.alert.gold .alert-body h4{color:var(--gold);}
+.alert-body p{font-size:0.83rem;margin:0;color:#bbb;}
+
+/* ── TABLE ── */
+.table-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border);margin:1.3rem 0;}
+table{width:100%;border-collapse:collapse;}
+th{background:rgba(201,168,76,0.08);font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;color:var(--gold);padding:0.7rem 1rem;text-align:left;border-bottom:1px solid var(--border);}
+td{padding:0.65rem 1rem;font-size:0.85rem;color:#ccc;border-bottom:1px solid rgba(255,255,255,0.04);}
+tr:last-child td{border:none;}
+tr:hover td{background:rgba(255,255,255,0.02);}
+
+/* ── TIMELINE ── */
+.timeline{position:relative;padding-left:2.2rem;}
+.timeline::before{content:'';position:absolute;left:0.55rem;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--gold),var(--purple),var(--blue),var(--green));border-radius:2px;}
+.phase{position:relative;margin-bottom:2.5rem;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.6rem 1.8rem;transition:border-color 0.3s;}
+.phase:hover{border-color:rgba(201,168,76,0.35);}
+.phase-dot{position:absolute;left:-1.85rem;top:1.6rem;width:14px;height:14px;border-radius:50%;border:2px solid var(--gold);background:var(--bg);display:flex;align-items:center;justify-content:center;}
+.phase-dot::after{content:'';width:5px;height:5px;border-radius:50%;background:var(--gold);}
+.phase-tag{font-family:'JetBrains Mono',monospace;font-size:0.62rem;padding:0.18rem 0.65rem;border-radius:100px;background:rgba(201,168,76,0.1);color:var(--gold);border:1px solid rgba(201,168,76,0.25);letter-spacing:0.1em;display:inline-block;margin-bottom:0.5rem;}
+.phase-meta{font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:var(--muted);margin-bottom:0.8rem;}
+.phase-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0.8rem;margin-top:1rem;}
+.task-card{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:0.9rem;}
+.task-card .tk{font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:var(--muted);letter-spacing:0.1em;margin-bottom:0.35rem;}
+.task-card p{font-size:0.82rem;margin:0;color:#ccc;}
+
+/* ── SCHEDULE (3hr version) ── */
+.schedule-grid{display:grid;gap:0.5rem;}
+.slot{display:grid;grid-template-columns:100px 1fr;gap:1rem;align-items:center;background:var(--card);border:1px solid var(--border);border-radius:9px;padding:0.7rem 1.1rem;transition:border-color 0.2s;}
+.slot:hover{border-color:rgba(201,168,76,0.3);}
+.slot .time{font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--gold);font-weight:600;}
+.slot .act{font-size:0.88rem;color:var(--text);}
+.slot.work{background:rgba(224,90,90,0.04);border-color:rgba(224,90,90,0.18);}
+.slot.work .time{color:var(--red);}
+.slot.study{background:rgba(201,168,76,0.05);border-color:rgba(201,168,76,0.25);}
+.slot.sleep{background:rgba(76,175,125,0.04);border-color:rgba(76,175,125,0.15);}
+.slot.sleep .time{color:var(--green);}
+
+/* ── STEPS ── */
+.steps{counter-reset:step;}
+.step{counter-increment:step;display:flex;gap:1.3rem;margin-bottom:1.8rem;align-items:flex-start;}
+.step-num{flex-shrink:0;width:38px;height:38px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--gold);background:rgba(201,168,76,0.05);}
+.step-num::after{content:counter(step);}
+.step-body h3{margin-bottom:0.3rem;font-size:1.05rem;}
+.step-body p{font-size:0.85rem;margin:0;color:#bbb;}
+
+/* ── CHECKLIST ── */
+.cl-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;}
+.cl-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.3rem;}
+.cl-box h3{font-size:0.95rem;margin-bottom:0.9rem;}
+.ci{display:flex;align-items:flex-start;gap:0.65rem;padding:0.35rem 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:0.82rem;color:#ccc;cursor:pointer;transition:color 0.2s;user-select:none;}
+.ci:last-child{border:none;}
+.ci:hover{color:#fff;}
+.ci .box{width:15px;height:15px;border:1.5px solid var(--muted);border-radius:3px;flex-shrink:0;margin-top:0.15rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
+.ci.checked .box{background:var(--green);border-color:var(--green);}
+.ci.checked .box::after{content:'✓';font-size:0.55rem;color:#fff;font-weight:700;}
+.ci.checked{color:var(--muted);text-decoration:line-through;}
+
+/* ── PROGRESS ── */
+.prog-item{margin-bottom:1.1rem;}
+.prog-label{display:flex;justify-content:space-between;margin-bottom:0.35rem;font-size:0.82rem;color:#ccc;}
+.prog-label span:last-child{font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--muted);}
+.prog-bar{height:5px;background:rgba(255,255,255,0.06);border-radius:100px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:100px;transition:width 1.5s ease;}
+.fill-gold{background:linear-gradient(to right,var(--gold),var(--gold2));}
+.fill-blue{background:linear-gradient(to right,var(--blue),#7ab0f5);}
+.fill-green{background:linear-gradient(to right,var(--green),#6fcf8f);}
+.fill-red{background:linear-gradient(to right,var(--red),#f07070);}
+.fill-purple{background:linear-gradient(to right,var(--purple),#c084fc);}
+
+/* ── OBC BANNER ── */
+.obc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin:1.5rem 0;}
+.obc-cell{background:linear-gradient(135deg,rgba(201,168,76,0.08),rgba(201,168,76,0.03));border:1px solid rgba(201,168,76,0.25);border-radius:12px;padding:1.2rem;text-align:center;}
+.obc-num{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:900;color:var(--gold);line-height:1;}
+.obc-lbl{font-size:0.72rem;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-top:0.3rem;}
+.obc-desc{font-size:0.78rem;color:#bbb;margin-top:0.5rem;}
+
+blockquote{border-left:3px solid var(--gold);padding:0.9rem 1.4rem;margin:1.3rem 0;background:rgba(201,168,76,0.04);border-radius:0 10px 10px 0;font-style:italic;font-size:1rem;color:var(--text);}
+blockquote cite{display:block;margin-top:0.4rem;font-size:0.75rem;color:var(--muted);font-style:normal;font-family:'JetBrains Mono',monospace;}
+
+/* ── CAL GRID ── */
+.cal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:0.9rem;}
+.cal-m{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:1.1rem;transition:border-color 0.2s;}
+.cal-m:hover{border-color:rgba(201,168,76,0.3);}
+.cal-m .cmn{font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:var(--gold);letter-spacing:0.14em;margin-bottom:0.4rem;}
+.cal-m h4{font-size:0.9rem;color:#fff;margin-bottom:0.4rem;}
+.cal-m ul{list-style:none;}
+.cal-m ul li{font-size:0.75rem;color:#bbb;padding:0.18rem 0;padding-left:0.9rem;position:relative;}
+.cal-m ul li::before{content:'›';position:absolute;left:0;color:var(--gold);}
+
+footer{text-align:center;padding:2.5rem 2rem;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:var(--muted);letter-spacing:0.08em;}
+footer span{color:var(--gold);}
+
+.tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:0.6rem;padding:0.12rem 0.5rem;border-radius:4px;background:rgba(201,168,76,0.1);color:var(--gold);border:1px solid rgba(201,168,76,0.2);margin-bottom:0.4rem;}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease;}
+.rv.vis{opacity:1;transform:none;}
+
+@media(max-width:680px){
+  section{padding:3rem 1.2rem;}
+  .hero{padding:4rem 1.2rem 2.5rem;}
+  .worker-banner{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div id="pgbar" style="width:0%"></div>
+
+<!-- TOP NAV -->
+<nav id="topnav">
+  <div class="nav-brand">Pramod Kumar Nagaraj — UPSC 2028</div>
+  <button id="sidebar-toggle" title="Toggle sidebar">☰</button>
+</nav>
+
+<div id="layout">
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sb-header">Navigation</div>
+
+  <a class="sb-item active" href="#hero"><span class="sb-icon">🏠</span>Home</a>
+
+  <div class="sb-header">You & The Exam</div>
+  <a class="sb-item" href="#intro"><span class="sb-icon">👤</span>About Pramod</a>
+  <a class="sb-item" href="#exam-structure"><span class="sb-icon">📋</span>Exam Structure</a>
+  <a class="sb-item" href="#worker"><span class="sb-icon">💼</span>Working Pro Strategy</a>
+
+  <div class="sb-divider"></div>
+  <div class="sb-header">Preparation Plan</div>
+  <a class="sb-item" href="#phases"><span class="sb-icon">🗺️</span>3-Year Phase Plan</a>
+  <a class="sb-item" href="#calendar"><span class="sb-icon">📅</span>Month Calendar</a>
+  <a class="sb-item" href="#schedule"><span class="sb-icon">⏰</span>Daily 3-hr Schedule</a>
+
+  <div class="sb-divider"></div>
+  <div class="sb-header">What to Study</div>
+  <a class="sb-item" href="#subjects"><span class="sb-icon">📚</span>All Subjects</a>
+  <a class="sb-item" href="#optional"><span class="sb-icon">🎯</span>Optional Subject</a>
+  <a class="sb-item" href="#booklist"><span class="sb-icon">📖</span>Master Booklist</a>
+
+  <div class="sb-divider"></div>
+  <div class="sb-header">Exam Strategy</div>
+  <a class="sb-item" href="#prelims"><span class="sb-icon">📝</span>Prelims Strategy</a>
+  <a class="sb-item" href="#mains"><span class="sb-icon">✍️</span>Mains Strategy</a>
+  <a class="sb-item" href="#ethics"><span class="sb-icon">🧭</span>Ethics (GS4)</a>
+  <a class="sb-item" href="#essay"><span class="sb-icon">📄</span>Essay Paper</a>
+  <a class="sb-item" href="#interview"><span class="sb-icon">🎤</span>Interview</a>
+  <a class="sb-item" href="#current"><span class="sb-icon">🗞️</span>Current Affairs</a>
+
+  <div class="sb-divider"></div>
+  <div class="sb-header">Free Resources</div>
+  <a class="sb-item" href="#resources-ncert"><span class="sb-icon">📥</span>NCERT Downloads</a>
+  <a class="sb-item" href="#resources-notes"><span class="sb-icon">🗒️</span>Free Notes Sites</a>
+  <a class="sb-item" href="#resources-pyq"><span class="sb-icon">📃</span>PYQ Papers</a>
+  <a class="sb-item" href="#resources-mock"><span class="sb-icon">🧪</span>Mock Tests</a>
+
+  <div class="sb-divider"></div>
+  <div class="sb-header">Stay on Track</div>
+  <a class="sb-item" href="#targets"><span class="sb-icon">🎯</span>Score Targets</a>
+  <a class="sb-item" href="#checklist"><span class="sb-icon">✅</span>Weekly Checklist</a>
+  <a class="sb-item" href="#mistakes"><span class="sb-icon">🚫</span>Common Mistakes</a>
+  <a class="sb-item" href="#mindset"><span class="sb-icon">🧠</span>Mindset & Health</a>
+  <a class="sb-item" href="#rules"><span class="sb-icon">⭐</span>Golden Rules</a>
+
+  <div style="height:2rem;"></div>
+</aside>
+
+<!-- MAIN -->
+<main id="main">
+
+<!-- HERO / COVER PAGE -->
+<div class="hero" id="hero">
+  <div class="hero-badge">UPSC CSE 2028 · PERSONAL STUDY PLAN · WORKING PROFESSIONAL</div>
+  <h1 class="hero-title">Pramod Kumar Nagaraj's Plan to Clear UPSC Mains 2028</h1>
+  <p class="hero-sub">A complete, personal, structured blueprint — built around a full-time job and 3 focused hours of study every day from 20:00 to 23:00. Realistic. Disciplined. Achievable.</p>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-num">2028</span><span class="stat-label">Target Year</span></div>
+    <div class="stat"><span class="stat-num">3</span><span class="stat-label">Hours / Day</span></div>
+    <div class="stat"><span class="stat-num">~26</span><span class="stat-label">Months to Go</span></div>
+    <div class="stat"><span class="stat-num">Mar 2026</span><span class="stat-label">Start Now</span></div>
+  </div>
+</div>
+
+<!-- PERSONAL INTRO PAGE -->
+<section id="intro" class="rv" style="padding-top:0;">
+  <div style="background:linear-gradient(135deg,rgba(201,168,76,0.07),rgba(90,141,224,0.05));border:1px solid var(--border);border-radius:20px;padding:2.5rem 2.8rem;margin-bottom:2rem;">
+    <div style="display:flex;align-items:center;gap:1.2rem;margin-bottom:1.8rem;flex-wrap:wrap;">
+      <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--purple));display:flex;align-items:center;justify-content:center;font-size:1.8rem;flex-shrink:0;">🎯</div>
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--gold);letter-spacing:0.15em;margin-bottom:0.3rem;">ASPIRANT PROFILE</div>
+        <h2 style="font-size:1.9rem;margin:0;color:#fff;">Pramod Kumar Nagaraj</h2>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.2rem;margin-bottom:2rem;">
+      <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:1rem 1.2rem;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:var(--muted);letter-spacing:0.12em;margin-bottom:0.4rem;">TARGET EXAM</div>
+        <div style="font-size:1rem;color:#fff;font-family:'Playfair Display',serif;font-weight:700;">UPSC CSE 2028</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:1rem 1.2rem;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:var(--muted);letter-spacing:0.12em;margin-bottom:0.4rem;">DAILY STUDY HOURS</div>
+        <div style="font-size:1rem;color:#fff;font-family:'Playfair Display',serif;font-weight:700;">3 Hours (20:00 – 23:00)</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:1rem 1.2rem;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:var(--muted);letter-spacing:0.12em;margin-bottom:0.4rem;">WORKING STATUS</div>
+        <div style="font-size:1rem;color:#fff;font-family:'Playfair Display',serif;font-weight:700;">Software Engineer in Robotics</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:1rem 1.2rem;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:var(--muted);letter-spacing:0.12em;margin-bottom:0.4rem;">PREPARATION SPAN</div>
+        <div style="font-size:1rem;color:#fff;font-family:'Playfair Display',serif;font-weight:700;">26 Months (Mar 2026 → May 2028)</div>
+      </div>
+    </div>
+
+    <div style="border-left:3px solid var(--gold);padding-left:1.4rem;margin-bottom:1.8rem;">
+      <p style="font-size:1rem;color:var(--text);margin:0;font-style:italic;line-height:1.9;">"This is Pramod Kumar Nagaraj's personal plan to clear the UPSC Civil Services Examination — Mains 2028. Pramod is a working professional who dedicates 3 focused hours every evening, from 20:00 to 23:00, toward this goal. Starting March 2026, with ~26 months to the Prelims, the plan is built to be realistic, sustainable, and thorough — designed not for the person with unlimited time, but for someone who works all day and still chooses to chase something bigger every single night."</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;">
+      <div style="background:rgba(76,175,125,0.06);border:1px solid rgba(76,175,125,0.2);border-radius:10px;padding:1rem 1.2rem;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:var(--green);letter-spacing:0.1em;margin-bottom:0.5rem;">✅ THE COMMITMENT</div>
+        <p style="font-size:0.85rem;color:#ccc;margin:0;">3 hours every weekday evening. 6–8 hours each weekend. No breaks on the plan — only breaks for rest. Every hour after 20:00 is sacred study time.</p>
+      </div>
+      <div style="background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.2);border-radius:10px;padding:1rem 1.2rem;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:var(--gold);letter-spacing:0.1em;margin-bottom:0.5rem;">🎯 THE GOAL</div>
+        <p style="font-size:0.85rem;color:#ccc;margin:0;">Clear UPSC Prelims (May 2028) → Clear Mains (Sep 2028) → Ace the Interview (Feb 2029) → IAS / IPS selection.</p>
+      </div>
+      <div style="background:rgba(90,141,224,0.06);border:1px solid rgba(90,141,224,0.2);border-radius:10px;padding:1rem 1.2rem;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:var(--blue);letter-spacing:0.1em;margin-bottom:0.5rem;">💡 WHY THIS WILL WORK</div>
+        <p style="font-size:0.85rem;color:#ccc;margin:0;">3 hours/day × 365 days × ~2.2 years = 2,409 hours of focused preparation. That is more than enough to crack UPSC when those hours are planned, waste-free, and consistent.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXAM STRUCTURE —— directly follows intro -->
+<section id="exam-structure" class="rv">
+  <div class="section-label">KNOW THE GAME</div>
+  <h2>Complete Exam Architecture — What You're Actually Preparing For</h2>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Stage</th><th>Paper</th><th>Marks</th><th>Purpose</th><th>When</th></tr></thead>
+      <tbody>
+        <tr><td>Prelims</td><td>GS Paper 1 (MCQ)</td><td>200</td><td>Merit — Qualifying cut-off</td><td>May 2028</td></tr>
+        <tr><td>Prelims</td><td>CSAT / GS Paper 2 (MCQ)</td><td>200</td><td>Qualifying only (need 66/200)</td><td>May 2028</td></tr>
+        <tr><td>Mains</td><td>Essay (Paper 1)</td><td>250</td><td>Merit — counted in final rank</td><td>Sep 2028</td></tr>
+        <tr><td>Mains</td><td>GS 1 (History, Geo, Society)</td><td>250</td><td>Merit</td><td>Sep 2028</td></tr>
+        <tr><td>Mains</td><td>GS 2 (Polity, Governance, IR)</td><td>250</td><td>Merit</td><td>Sep 2028</td></tr>
+        <tr><td>Mains</td><td>GS 3 (Economy, Env, Security)</td><td>250</td><td>Merit</td><td>Sep 2028</td></tr>
+        <tr><td>Mains</td><td>GS 4 (Ethics)</td><td>250</td><td>Merit</td><td>Sep 2028</td></tr>
+        <tr><td>Mains</td><td>Optional Paper 1 + 2</td><td>500</td><td>Merit — biggest rank factor</td><td>Sep 2028</td></tr>
+        <tr><td>Mains</td><td>Language Papers (2)</td><td>600</td><td>Qualifying only</td><td>Sep 2028</td></tr>
+        <tr><td>Interview</td><td>Personality Test</td><td>275</td><td>Merit — final rank</td><td>Feb 2029</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="alert gold rv">
+    <div class="alert-icon">💡</div>
+    <div class="alert-body">
+      <h4>THE RANK EQUATION YOU MUST MEMORIZE</h4>
+      <p>Final Rank = Essay (250) + GS1 (250) + GS2 (250) + GS3 (250) + GS4 (250) + Optional 1+2 (500) + Interview (275) = 2025 total marks. Prelims only gets you IN. Everything else determines WHERE. This means: Mains + Interview = your destiny.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WORKING PROFESSIONAL STRATEGY -->
+<section id="worker" class="rv">
+  <div class="section-label">YOUR SPECIFIC STRATEGY</div>
+  <h2>The Working Professional Approach — Completely Different Game Plan</h2>
+  <p>Full-time aspirants prepare 8–10 hrs/day. You have 3 hrs. Here's how to bridge that gap with strategy, not suffering.</p>
+
+  <div class="card-grid rv">
+    <div class="card">
+      <span class="c-icon">🎯</span>
+      <h4>Quality Over Quantity</h4>
+      <p>3 distraction-free hours beats 8 half-focused hours. Turn off phone at 20:00. No notifications. No social media. Pure deep work. Your 3 hours must be worth 5 for a distracted full-timer.</p>
+    </div>
+    <div class="card">
+      <span class="c-icon">🧩</span>
+      <h4>Micro-Learning at Work</h4>
+      <p>During lunch break: 20 min newspaper (The Hindu app). During commute: UPSC podcast or lecture audio. Weekend mornings: 3-4 bonus hours. These "micro sessions" add 30–40 extra hours per month.</p>
+    </div>
+    <div class="card">
+      <span class="c-icon">🔁</span>
+      <h4>Slower Syllabus, Same Depth</h4>
+      <p>A full-timer covers Laxmikanth in 3 weeks. You take 7 weeks. That's fine — you get 36 months. Slower pace means better retention. No rushing. No skipping.</p>
+    </div>
+    <div class="card">
+      <span class="c-icon">📱</span>
+      <h4>Digital-First Strategy</h4>
+      <p>Use apps: NCERT PDFs on phone. Vision IAS app. Insights Daily Quiz app. ClearIAS app. 10–15 min Prelims MCQs daily during break. Technology compensates for less desk time.</p>
+    </div>
+    <div class="card">
+      <span class="c-icon">🗓️</span>
+      <h4>Weekend = Your Power Hours</h4>
+      <p>Sat + Sun = 8 additional hours (4 hrs each). This weekly "sprint" handles answer writing, mock tests, and marathon revision sessions that are impossible on weekdays.</p>
+    </div>
+    <div class="card">
+      <span class="c-icon">⚡</span>
+      <h4>Work Skills Help UPSC</h4>
+      <p>Your job gives you real-world examples for Mains answers and interview. An employee who understands bureaucratic processes, public interaction, and administration has a genuine edge in Ethics and GS2.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DAILY SCHEDULE -->
+<section id="schedule" class="rv">
+  <div class="section-label">YOUR DAILY ROUTINE</div>
+  <h2>Hour-by-Hour Daily Schedule — Working Professional Edition</h2>
+  <p>This is built around your 20:00–23:00 study window. Every minute is accounted for.</p>
+
+  <div class="schedule-grid">
+    <div class="slot"><div class="time">6:00–6:30 AM</div><div class="act">☀️ Wake up. Light yoga / walk. Mental preparation for the day.</div></div>
+    <div class="slot"><div class="time">6:30–7:00 AM</div><div class="act">📰 <strong>The Hindu headlines + editorial</strong> (30 min, phone/app). Make 2-3 key notes mentally.</div></div>
+    <div class="slot"><div class="time">7:00–8:00 AM</div><div class="act">🍳 Morning routine, breakfast, commute prep.</div></div>
+    <div class="slot work"><div class="time">8:00 AM–7:30 PM</div><div class="act">💼 <strong>Work</strong> — During lunch (20 min): Insights Daily Quiz app OR NCERT chapter audio. Commute: UPSC podcast.</div></div>
+    <div class="slot"><div class="time">7:30–8:00 PM</div><div class="act">🍽️ Dinner + 15-min walk. Hard disconnect from work. Mental transition to study mode.</div></div>
+    <div class="slot study"><div class="time">8:00–8:45 PM</div><div class="act">📚 <strong>Session 1 (45 min)</strong> — Static book reading. Follow weekly rotation: Mon=History, Tue=Polity, Wed=Economy, Thu=Geography, Fri=Ethics/Optional, Sat=Revision, Sun=Essay writing.</div></div>
+    <div class="slot study"><div class="time">8:45–9:00 PM</div><div class="act">☕ Short break. Stretch. Drink water. 5 min review of what you just read.</div></div>
+    <div class="slot study"><div class="time">9:00–9:45 PM</div><div class="act">✍️ <strong>Session 2 (45 min)</strong> — Answer writing OR Mains notes making OR Optional subject reading. Rotate.</div></div>
+    <div class="slot study"><div class="time">9:45–10:00 PM</div><div class="act">⏸️ Break. Quick walk. Hydrate.</div></div>
+    <div class="slot study"><div class="time">10:00–10:45 PM</div><div class="act">🗞️ <strong>Session 3 (45 min)</strong> — Current affairs consolidation. Tag news to GS topics. Review day's newspaper notes.</div></div>
+    <div class="slot study"><div class="time">10:45–11:00 PM</div><div class="act">📋 Plan tomorrow's sessions. Write down one key thing learned today. Close all study material.</div></div>
+    <div class="slot sleep"><div class="time">11:00 PM</div><div class="act">😴 <strong>SLEEP</strong> — 7 hours minimum. Non-negotiable. Brain consolidates memory during sleep.</div></div>
+  </div>
+
+  <div class="alert tip rv" style="margin-top:1.5rem;">
+    <div class="alert-icon">📅</div>
+    <div class="alert-body">
+      <h4>WEEKEND POWER SCHEDULE (Sat + Sun)</h4>
+      <p>Morning 7:00–11:00 AM: 4 hours deep study (mock test or long reading + notes). Afternoon 2:00–4:00 PM: 2 hours revision or answer writing. Evening: Rest and family time. Weekend = 12 extra hours/week. Over ~26 months = 1,352 bonus hours beyond your daily 3.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PHASE PLAN -->
+<section id="phases" class="rv">
+  <div class="section-label">2-YEAR ROADMAP</div>
+  <h2>Phase-by-Phase Battle Plan (Mar 2026 — May 2028)</h2>
+  <p>You have ~26 months from today. Here is how to use every single one strategically. Pace is adjusted for a working professional — depth is never compromised.</p>
+
+  <div class="timeline">
+
+    <div class="phase rv">
+      <div class="phase-dot"></div>
+      <div class="phase-tag">PHASE 1</div>
+      <h3>Foundation — NCERTs + Mindset + Newspaper Habit</h3>
+      <div class="phase-meta">Mar 2026 — Aug 2026 · 6 months</div>
+      <p>This is about building the bedrock. NCERTs, newspaper habit, syllabus understanding. No standard books yet. No pressure. Just consistent foundation laying every evening.</p>
+      <div class="phase-grid">
+        <div class="task-card"><div class="tk">MAR–APR 2026</div><p>Read UPSC syllabus daily. Begin NCERT Geography 6→12. Start The Hindu every morning. Research optional subjects.</p></div>
+        <div class="task-card"><div class="tk">MAY–JUN 2026</div><p>Complete History NCERTs 6→12. Finalize optional subject choice. Read 20 Prelims PYQs per week from NCERT topics.</p></div>
+        <div class="task-card"><div class="tk">JUL–AUG 2026</div><p>Complete Polity NCERTs 9→12. Economy NCERTs 9→12. Science 6→10. Start making subject notebooks.</p></div>
+        <div class="task-card"><div class="tk">MICRO LEARNING</div><p>During commute: UPSC podcasts (StudyIQ, Drishti IAS YouTube). Lunch: 15 Prelims quiz questions daily on ClearIAS app.</p></div>
+      </div>
+    </div>
+
+    <div class="phase rv">
+      <div class="phase-dot" style="border-color:var(--blue)"></div>
+      <div class="phase-tag" style="color:var(--blue);background:rgba(90,141,224,0.1);border-color:rgba(90,141,224,0.3);">PHASE 2</div>
+      <h3>Standard Books + Deep Subject Mastery</h3>
+      <div class="phase-meta">Sep 2026 — May 2027 · 9 months</div>
+      <p>The most critical phase. One subject per 6–8 weeks. Build your personal notes from standard books. Begin answer writing practice from Month 3 of this phase.</p>
+      <div class="phase-grid">
+        <div class="task-card"><div class="tk">SEP–NOV 2026</div><p>Laxmikanth (Polity) — read twice. Constitutional articles mapping. Start answer writing: 1 GS2 answer daily.</p></div>
+        <div class="task-card"><div class="tk">DEC 2026–FEB 2027</div><p>Spectrum (Modern History) + Art & Culture (Nitin Singhania). Bipin Chandra. 1 GS1 answer daily.</p></div>
+        <div class="task-card"><div class="tk">MAR–MAY 2027</div><p>Ramesh Singh (Economy). Economic Survey summary. Budget highlights. Environment (Rajagopalan). Optional: complete syllabus 1st time.</p></div>
+        <div class="task-card"><div class="tk">ONGOING</div><p>Ethics (Lexicon). Internal Security (Ashok Kumar). Geography (Majid Husain). 1 answer per subject daily. Current affairs notes every evening.</p></div>
+      </div>
+    </div>
+
+    <div class="phase rv">
+      <div class="phase-dot" style="border-color:var(--purple)"></div>
+      <div class="phase-tag" style="color:var(--purple);background:rgba(157,110,245,0.1);border-color:rgba(157,110,245,0.3);">PHASE 3</div>
+      <h3>Consolidation + Notes Finalization + Prelims Mock Tests</h3>
+      <div class="phase-meta">Jun 2027 — Dec 2027 · 7 months</div>
+      <p>Stop reading new material. Revise everything twice. Begin Prelims test series. Solve all 10 years of PYQs. Finalize personal revision notes.</p>
+      <div class="phase-grid">
+        <div class="task-card"><div class="tk">JUN–AUG 2027</div><p>2nd revision of all GS subjects. Finalize "Quick Revision Sheets" (1 A4 page per major topic). Start Prelims test series.</p></div>
+        <div class="task-card"><div class="tk">SEP–DEC 2027</div><p>1 Prelims mock test every weekend. Analyse every wrong answer. Solve PYQs from 2016–2026. Fix weak areas.</p></div>
+        <div class="task-card"><div class="tk">CSAT PREP</div><p>Practice CSAT every Saturday morning: reading comprehension, logical reasoning, data interpretation. Target 120/200.</p></div>
+        <div class="task-card"><div class="tk">OPTIONAL</div><p>Complete 2nd revision of optional. Write 10 past optional PYQs. Compare with model answers.</p></div>
+      </div>
+    </div>
+
+    <div class="phase rv">
+      <div class="phase-dot" style="border-color:var(--green)"></div>
+      <div class="phase-tag" style="color:var(--green);background:rgba(76,175,125,0.1);border-color:rgba(76,175,125,0.3);">PHASE 4</div>
+      <h3>Final Prelims Blitz + UPSC 2028 Prelims Exam</h3>
+      <div class="phase-meta">Jan 2028 — May 2028 · 5 months</div>
+      <p>Final sprint to Prelims. Stop all new material. Only revision, mocks, and current affairs. Two full mock tests per week. Your preparation is complete — trust it.</p>
+      <div class="phase-grid">
+        <div class="task-card"><div class="tk">JAN–MAR 2028</div><p>2 full mock tests/week. Current affairs intensive. 3rd revision of all subjects. Laxmikanth final reading.</p></div>
+        <div class="task-card"><div class="tk">APR 2028</div><p>Only revision. No new books. Quick Revision Sheets daily. Sleep 8 hrs every night. Light food, calm mind.</p></div>
+        <div class="task-card"><div class="tk">MAY 2028</div><p>🎯 UPSC 2028 Prelims. Well-rested, fully revised, confident. This is what 26 months of disciplined work looks like.</p></div>
+        <div class="task-card"><div class="tk">CSAT FINAL</div><p>Practice 1 full CSAT paper every Sunday in April. Target 110+ marks. Never leave CSAT to chance.</p></div>
+      </div>
+    </div>
+
+    <div class="phase rv">
+      <div class="phase-dot" style="border-color:var(--red)"></div>
+      <div class="phase-tag" style="color:var(--red);background:rgba(224,90,90,0.1);border-color:rgba(224,90,90,0.3);">PHASE 5</div>
+      <h3>Post-Prelims: Mains 100 Days + Interview</h3>
+      <div class="phase-meta">Jun–Sep 2028 (Mains) · Oct 2028–Feb 2029 (Interview)</div>
+      <p>After clearing Prelims, you have ~100 days for Mains. Then interview season. This is the final sprint — everything you've built gets deployed here.</p>
+      <div class="phase-grid">
+        <div class="task-card"><div class="tk">MAINS 100 DAYS</div><p>After Prelims, take 2 weeks off from job if possible (planned leave). 15–20 answers daily. Essay practice. Optional revision 3rd time.</p></div>
+        <div class="task-card"><div class="tk">INTERVIEW PREP</div><p>DAF preparation, 5–7 mock interviews, home state mastery, current affairs for opinions, personality polish.</p></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MONTH CALENDAR -->
+<section id="calendar" class="rv">
+  <div class="section-label">MONTH-BY-MONTH</div>
+  <h2>Complete Monthly Action Calendar (Mar 2026 — Feb 2029)</h2>
+
+  <div class="cal-grid">
+    <div class="cal-m"><div class="cmn">MAR–APR 2026</div><h4>Phase 1 Begins — Today</h4><ul><li>Read UPSC syllabus 10×</li><li>NCERT Geography 6–12</li><li>Start The Hindu daily</li><li>Research optional subjects</li></ul></div>
+    <div class="cal-m"><div class="cmn">MAY–JUN 2026</div><h4>NCERT History + Polity</h4><ul><li>Complete History NCERTs</li><li>Polity NCERTs 9–12</li><li>Finalize optional choice</li><li>Start ClearIAS quiz app</li></ul></div>
+    <div class="cal-m"><div class="cmn">JUL–AUG 2026</div><h4>Economy + Science NCERTs</h4><ul><li>Economy NCERTs 9–12</li><li>Science 6–10 NCERTs</li><li>Begin subject notebooks</li><li>15 PYQs per week</li></ul></div>
+    <div class="cal-m"><div class="cmn">SEP–NOV 2026</div><h4>Laxmikanth (Polity)</h4><ul><li>Read Laxmikanth 1st time</li><li>Map constitutional articles</li><li>1 GS2 answer daily</li><li>Current affairs notes</li></ul></div>
+    <div class="cal-m"><div class="cmn">DEC 2026–FEB 2027</div><h4>Modern History</h4><ul><li>Spectrum (Modern History)</li><li>Art & Culture (Nitin Singhania)</li><li>1 GS1 answer daily</li><li>Optional: 25% done</li></ul></div>
+    <div class="cal-m"><div class="cmn">MAR–MAY 2027</div><h4>Economy + Environment</h4><ul><li>Ramesh Singh Economy</li><li>Economic Survey summary</li><li>Rajagopalan Environment</li><li>1 GS3 answer daily</li></ul></div>
+    <div class="cal-m"><div class="cmn">JUN–AUG 2027</div><h4>Security + Ethics + Geography</h4><ul><li>Ashok Kumar Internal Security</li><li>Lexicon Ethics</li><li>Majid Husain Geography</li><li>Optional: syllabus complete</li></ul></div>
+    <div class="cal-m"><div class="cmn">SEP–NOV 2027</div><h4>Consolidation + Prelims Mocks</h4><ul><li>2nd revision all GS subjects</li><li>Quick Revision Sheets</li><li>Start Prelims test series</li><li>Optional: 1st revision</li></ul></div>
+    <div class="cal-m"><div class="cmn">DEC 2027–JAN 2028</div><h4>Prelims Mock Intensive</h4><ul><li>1–2 full mocks/week</li><li>Solve PYQs 2016–2027</li><li>CSAT every Saturday</li><li>Fix all weak topics</li></ul></div>
+    <div class="cal-m"><div class="cmn">FEB–APR 2028</div><h4>Final Revision Only</h4><ul><li>No new material at all</li><li>2 mocks/week</li><li>Current affairs intensive</li><li>8 hrs sleep every night</li></ul></div>
+    <div class="cal-m"><div class="cmn">MAY 2028</div><h4>🎯 PRELIMS EXAM</h4><ul><li>Last 7 days: revision only</li><li>Calm mind, light food</li><li>Trust your preparation</li><li>Attempt with confidence</li></ul></div>
+    <div class="cal-m"><div class="cmn">JUN–AUG 2028</div><h4>Mains 100 Days War</h4><ul><li>Take planned leave if possible</li><li>15–20 answers/day</li><li>Essay 2×/week</li><li>Current affairs integration</li></ul></div>
+    <div class="cal-m"><div class="cmn">SEP 2028</div><h4>🏆 MAINS EXAM</h4><ul><li>9 papers over 5 days</li><li>Physical + mental endurance</li><li>Don't discuss papers between days</li><li>Stay calm throughout</li></ul></div>
+    <div class="cal-m"><div class="cmn">OCT 2028–FEB 2029</div><h4>Interview Preparation</h4><ul><li>Deep DAF preparation</li><li>5–7 mock interviews</li><li>Home state mastery</li><li>Personality polish</li></ul></div>
+  </div>
+</section>
+
+<!-- SUBJECTS -->
+<section id="subjects" class="rv">
+  <div class="section-label">SUBJECT STRATEGY</div>
+  <h2>Complete Subject-by-Subject Strategy & Resources</h2>
+
+  <div class="card-grid">
+
+    <div class="card c-history rv">
+      <span class="c-icon">🏛️</span>
+      <div class="tag">GS PAPER 1</div>
+      <h3>History (Ancient · Medieval · Modern)</h3>
+      <p>Dates don't win UPSC. Causes, impacts, and context do. Focus on socio-religious reform movements, economic impact of British rule, constitutional evolution, post-independence India.</p>
+      <ul class="book-list">
+        <li>NCERTs Class 6–12 (Old + New both)</li>
+        <li>TN Board Class 11–12 (Ancient & Medieval — best source)</li>
+        <li>Spectrum — A Brief History of Modern India</li>
+        <li>Bipin Chandra — India's Struggle for Independence</li>
+        <li>Bipin Chandra — India After Independence</li>
+        <li>Nitin Singhania — Art & Culture</li>
+      </ul>
+    </div>
+
+    <div class="card c-geo rv">
+      <span class="c-icon">🌍</span>
+      <div class="tag">GS PAPER 1 + 3</div>
+      <h3>Geography (Physical · Indian · World)</h3>
+      <p>Maps are non-negotiable. Practice on blank maps every week. Physical Geography concepts are directly testable. Indian Geography links to economy (minerals, crops, industries).</p>
+      <ul class="book-list">
+        <li>NCERTs Geography Class 6–12 (all books)</li>
+        <li>G.C. Leong — Certificate Physical & Human Geography</li>
+        <li>Majid Husain — Geography of India</li>
+        <li>Orient BlackSwan School Atlas (buy physical copy)</li>
+      </ul>
+    </div>
+
+    <div class="card c-polity rv">
+      <span class="c-icon">⚖️</span>
+      <div class="tag">GS PAPER 2</div>
+      <h3>Indian Polity & Governance</h3>
+      <p>Highest yield single subject across both Prelims and Mains. Read Laxmikanth 4–5 times minimum. Quote Constitutional Articles in every Mains answer — it directly boosts marks.</p>
+      <ul class="book-list">
+        <li>M. Laxmikanth — Indian Polity (THE Bible)</li>
+        <li>NCERT Class 11 — Indian Constitution at Work</li>
+        <li>Laxmikanth — Governance in India</li>
+        <li>2nd ARC Reports (select chapters online)</li>
+      </ul>
+    </div>
+
+    <div class="card c-eco rv">
+      <span class="c-icon">📈</span>
+      <div class="tag">GS PAPER 3</div>
+      <h3>Indian Economy</h3>
+      <p>30–35% of GS Paper 3. Always use latest data: GDP growth, inflation rate, FDI figures, budget allocations. Economic Survey and Union Budget are primary UPSC sources every year.</p>
+      <ul class="book-list">
+        <li>Ramesh Singh — Indian Economy (10th+ edition)</li>
+        <li>NCERT Class 11 — Indian Economic Development</li>
+        <li>NCERT Class 12 — Macroeconomics</li>
+        <li>Economic Survey (Latest, free PDF from MoF website)</li>
+        <li>Union Budget Highlights (Free PIB document)</li>
+      </ul>
+    </div>
+
+    <div class="card c-env rv">
+      <span class="c-icon">🌿</span>
+      <div class="tag">GS PAPER 3</div>
+      <h3>Environment & Ecology</h3>
+      <p>60% current affairs, 40% static. Growing rapidly in UPSC. Every COP summit, every new species/park notification matters. Down To Earth magazine is your best friend here.</p>
+      <ul class="book-list">
+        <li>R. Rajagopalan — Environmental Studies</li>
+        <li>NCERTs Biology Class 11–12 (Ecology chapters)</li>
+        <li>Down To Earth Magazine (monthly, free online)</li>
+        <li>Shankar IAS Environment (for quick revision)</li>
+        <li>MoEFCC website — new notifications</li>
+      </ul>
+    </div>
+
+    <div class="card c-ethics rv">
+      <span class="c-icon">🧭</span>
+      <div class="tag">GS PAPER 4</div>
+      <h3>Ethics, Integrity & Aptitude</h3>
+      <p>THE RANK DECIDER. Candidates scoring 130+ jump ranks by 50–100 positions. Maintain an Ethics Notebook with quotes, thinkers, real examples. Your work experience = real case study material.</p>
+      <ul class="book-list">
+        <li>Lexicon — Ethics, Integrity & Aptitude</li>
+        <li>Subba Rao & P.N. Roy Chowdhury</li>
+        <li>2nd ARC Report: Ethics in Governance (Ch 1–2, free PDF)</li>
+        <li>Thinkers: Gandhi, Aristotle, Kant, Rawls, Vivekananda, Kautilya</li>
+      </ul>
+    </div>
+
+    <div class="card c-sci rv">
+      <span class="c-icon">🔬</span>
+      <div class="tag">GS PAPER 3</div>
+      <h3>Science & Technology</h3>
+      <p>Rapidly evolving. Track ISRO missions, defence tech, AI policy, biotech, quantum computing. 40% static (basic science) + 60% current (latest developments).</p>
+      <ul class="book-list">
+        <li>NCERTs Science Class 6–10 (fundamentals)</li>
+        <li>Science Reporter Magazine (free reading online)</li>
+        <li>ISRO / DRDO press releases (official sites)</li>
+        <li>PIB Science & Technology tag</li>
+      </ul>
+    </div>
+
+    <div class="card c-essay rv">
+      <span class="c-icon">✍️</span>
+      <div class="tag">ESSAY PAPER</div>
+      <h3>Essay Writing (250 marks)</h3>
+      <p>Most neglected, most rewarding paper. 2 essays (Section A + B). Write 2 full essays every weekend from Month 12 onwards. Strong opening, multi-domain arguments, data, powerful conclusion.</p>
+      <ul class="book-list">
+        <li>151 Essays — S.C. Gupta</li>
+        <li>Past UPSC Essay Papers (free download)</li>
+        <li>The Hindu editorials (ideas bank)</li>
+        <li>Speeches of great leaders (Gandhi, Ambedkar, Lincoln)</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- OPTIONAL -->
+<section id="optional" class="rv">
+  <div class="section-label">CHOOSING YOUR OPTIONAL</div>
+  <h2>Optional Subject — 500 Marks That Can Make or Break Your Rank</h2>
+  <p>The optional contributes 500 marks (2 papers × 250). A high-scoring optional can launch your rank to the top. Choose once. Study deeply. Never switch mid-way.</p>
+
+  <div class="card-grid rv">
+    <div class="card"><span class="c-icon">📊</span><h4>Anthropology ⭐ Best for Working Pros</h4><p>Compact syllabus. No prior background needed. Consistent 280–330 score possible. Easiest to study in 3-hour/day schedule. Most recommended for first-timers.</p></div>
+    <div class="card"><span class="c-icon">🌏</span><h4>Geography</h4><p>Maximum GS overlap. Saves total prep time. If you genuinely enjoy geography, this is highly efficient. Overlaps with GS 1 and GS 3.</p></div>
+    <div class="card"><span class="c-icon">🏛️</span><h4>PSIR (Political Science)</h4><p>Most popular optional. Good GS 2 overlap. Excellent coaching availability. Best for humanities graduates.</p></div>
+    <div class="card"><span class="c-icon">👥</span><h4>Sociology</h4><p>Good GS 1 Indian Society overlap. Compact, analytical. Growing popularity and availability of coaching. Moderate difficulty.</p></div>
+    <div class="card"><span class="c-icon">📜</span><h4>History</h4><p>Heavy overlap with GS 1. Good for those who genuinely love historical analysis. Requires extensive writing practice.</p></div>
+    <div class="card"><span class="c-icon">🔢</span><h4>Mathematics</h4><p>Extremely high-scoring for engineering backgrounds. Zero memorization. But no room for error. Only if you have strong math foundation.</p></div>
+  </div>
+
+  <div class="alert gold rv">
+    <div class="alert-icon">🏆</div>
+    <div class="alert-body">
+      <h4>FOR A WORKING PROFESSIONAL: ANTHROPOLOGY OR GEOGRAPHY IS RECOMMENDED</h4>
+      <p>Both have compact syllabi, excellent free study material availability, and strong scoring history. Anthropology's syllabus can be completed in 6–8 months at 3 hrs/day. Geography leverages your existing NCERT preparation. PSIR is good too but requires more writing practice. Decide by Month 2 and NEVER look back.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKLIST -->
+<section id="booklist" class="rv">
+  <div class="section-label">DEFINITIVE RESOURCES</div>
+  <h2>Master Booklist — One Book Per Subject, Read It Many Times</h2>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Subject</th><th>Primary Book</th><th>Supplementary</th><th>Readings</th></tr></thead>
+      <tbody>
+        <tr><td>Ancient & Medieval History</td><td>TN Board 11–12 + Old NCERTs (RS Sharma, Satish Chandra)</td><td>Nitin Singhania (Art & Culture)</td><td>2×</td></tr>
+        <tr><td>Modern History</td><td>Spectrum — Brief History of Modern India</td><td>Bipin Chandra (Struggle for Independence)</td><td>3–4×</td></tr>
+        <tr><td>Post-Independence</td><td>Bipin Chandra — India After Independence</td><td>NCERT Class 12 Contemporary India</td><td>2×</td></tr>
+        <tr><td>World History</td><td>Arjun Dev — History of the World (Old NCERT)</td><td>NCERT Class 9–10 history books</td><td>2×</td></tr>
+        <tr><td>Geography (Physical + India)</td><td>G.C. Leong + Majid Husain</td><td>NCERTs 6–12, Orient Atlas</td><td>2–3×</td></tr>
+        <tr><td>Indian Polity</td><td>M. Laxmikanth — Indian Polity</td><td>Laxmikanth Governance, SC Judgements</td><td>4–5×</td></tr>
+        <tr><td>Indian Economy</td><td>Ramesh Singh — Indian Economy</td><td>Economic Survey + Budget (annual)</td><td>3×</td></tr>
+        <tr><td>Environment</td><td>R. Rajagopalan — Env. Studies</td><td>Down To Earth, MoEFCC</td><td>2–3×</td></tr>
+        <tr><td>Ethics</td><td>Lexicon for Ethics</td><td>Subba Rao, 2nd ARC Report Ch 1–2</td><td>3×</td></tr>
+        <tr><td>Art & Culture</td><td>Nitin Singhania — Art & Culture</td><td>ASI website, current heritage news</td><td>2×</td></tr>
+        <tr><td>Intl. Relations</td><td>Pavneet Singh or Rajiv Sikri</td><td>MEA website, The Hindu editorials</td><td>2×</td></tr>
+        <tr><td>Internal Security</td><td>Ashok Kumar IPS — Challenges to Internal Security</td><td>IDSA reports, PIB updates</td><td>2×</td></tr>
+        <tr><td>CSAT</td><td>Arihant CSAT or RS Aggarwal</td><td>Past 10 years CSAT PYQs</td><td>Practice weekly</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ── FREE RESOURCES SECTION ── -->
+<section id="resources-ncert" class="rv">
+  <div class="section-label">FREE DOWNLOADS</div>
+  <h2>📥 NCERT Books — Free Official Downloads</h2>
+  <p>NCERTs are published by the government and are freely available online. These are your most important starting material. All links below are official or highly trusted sources.</p>
+
+  <div class="res-grid">
+    <div class="res-card">
+      <a href="https://ncert.nic.in/textbook.php" target="_blank" rel="noopener">
+        <span class="res-tag">OFFICIAL GOVERNMENT SITE</span>
+        <h4>ncert.nic.in — Official NCERT PDFs</h4>
+        <p>Download ALL NCERT textbooks Class 1–12, every subject, completely free. The primary source.</p>
+        <span class="res-arrow">↗</span>
+      </a>
+    </div>
+    <div class="res-card">
+      <a href="https://epathshala.nic.in" target="_blank" rel="noopener">
+        <span class="res-tag">OFFICIAL MOBILE APP</span>
+        <h4>ePathshala — NCERT App & eBooks</h4>
+        <p>Official NCERT mobile app. Read NCERTs on your phone during commute. Available on Android & iOS.</p>
+        <span class="res-arrow">↗</span>
+      </a>
+    </div>
+    <div class="res-card">
+      <a href="https://vajiramandravi.com/upsc-exam/ncert-books-pdf/" target="_blank" rel="noopener">
+        <span class="res-tag">NCERT FOR UPSC</span>
+        <h4>Vajirao & Reddy — NCERT Guide for UPSC</h4>
+        <p>Subject-wise NCERT download guide specifically organized for UPSC aspirants. Tells you which chapters matter.</p>
+        <span class="res-arrow">↗</span>
+      </a>
+    </div>
+    <div class="res-card">
+      <a href="https://freeupsc.org/standard-books/" target="_blank" rel="noopener">
+        <span class="res-tag">STANDARD BOOKS PDF</span>
+        <h4>FreeUPSC.org — Standard Books PDF</h4>
+        <p>Laxmikanth, Spectrum, Lexicon, Ramesh Singh, and more — UPSC standard books available as PDFs.</p>
+        <span class="res-arrow">↗</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="resources-notes" class="rv" style="padding-top:0;">
+  <div class="section-label">FREE NOTES & STUDY MATERIAL</div>
+  <h2>🗒️ Free Online Notes & Study Websites</h2>
+  <p>These platforms offer free, high-quality, exam-oriented notes that you can read on your phone during breaks or commute. Bookmark all of them.</p>
+
+  <div class="res-grid">
+    <div class="res-card">
+      <a href="https://www.clearias.com/ias-study-materials/" target="_blank" rel="noopener">
+        <span class="res-tag">FREE NOTES · ALL SUBJECTS</span>
+        <h4>ClearIAS — Free Study Materials</h4>
+        <p>1000+ topic-wise notes for free. Also has a Prelims mock test app. One of the best free resources for UPSC aspirants.</p>
+        <span class="res-arrow">↗</span>
+      </a>
+    </div>
+    <div class="res-card">
+      <a href="https://www.insightsonindia.com" target="_blank" rel="noopener">
+        <span class="res-tag">DAILY CURRENT AFFAIRS</span>
+        <h4>Insights on India — Daily Notes</h4>
+        <p>Free daily current affairs, Prelims quiz, editorial summaries, and answer writing practice. Updated every day.</p>
+        <span class="res-arrow">↗</span>
+      </a>
+    </div>
+    <div class="res-card">
+      <a href="https://www.drishtiias.com/free-downloads" target="_blank" rel="noopener">
+        <span class="res-tag">FREE DOWNLOADS</span>
+        <h4>Drishti IAS — Free Study Material</h4>
+        <p>Hindi & English notes, monthly current affairs magazines, GS study material. All downloadable for free.</p>
+        <span class="res-arrow">↗</span>
+      </a>
+    </div>
+    <div class="res-card">
+      <a href="https://forumias.com" target="_blank" rel="noopener">
+        <span class="res-tag">COMMUNITY + NOTES</span>
+        <h4>ForumIAS — Notes & Discussion</h4>
+        <p>India's largest UPSC community. Free study materials, answer evaluation, current affairs, and peer learning.</p>
+        <span class="res-arrow">↗</span>
+      </a>
+    </div>
+    <div class="res-card">
+      <a href="https://vision.clearias.com" target="_blank" rel="noopener">
+        <span class="res-tag">MONTHLY MAGAZINE FREE</span>
+        <h4>Vision IAS — Monthly Current Affairs</h4>
+        <p>The most popular monthly current affairs magazine. Recent months often available as free PDF downloads.</p>
+        <span class="res-arrow">↗</span>
+      </a>
+    </div>
+    <div class="res-card">
+      <a href="https://pib.gov.in" target="_blank" rel="noopener">
+        <span class="res-tag">OFFICIAL GOVERNMENT</span>
+        <h4>PIB — Press Information Bureau</h4>
+        <p>The official government news source. UPSC loves PIB content. Bookmark and check weekly for scheme launches and policy updates.</p>
+        <span class="res-arrow">↗</span>
+      </a>
+    </div>
+    <div class="res-card">
+      <a href="https://www.downtoearth.org.in" target="_blank" rel="noopener">
+        <span class="res-tag">ENVIRONMENT SPECIALIST</span>
+        <h4>Down To Earth — Free Environment News</h4>
+        <p>Best source for Environment & Ecology current affairs. All articles free online. Read 2–3 articles/week.</p>
+        <span class="res-arrow">↗</span>
+      </a>
+    </div>
+    <div class="res-card">
+      <a href="https://yojana.gov.in" target="_blank" rel="noopener">
+        <span class="res-tag">GOVT MAGAZINE · FREE PDF</span>
+        <h4>Yojana Magazine — Free Official PDF</h4>
+        <p>Government's official magazine on development and governance schemes. Free PDF download every month. Excellent for GS 2 and GS 3.</p>
+        <span class="res-arrow">↗</span>
+      </a>
+    </div>
+    <div class="res-card">
+      <a href="https://kurukshetra.gov.in" target="_blank" rel="noopener">
+        <span class="res-tag">RURAL DEVELOPMENT</span>
+        <h4>Kurukshetra Magazine — Free PDF</h4>
+        <p>Official magazine focused on rural development and agriculture. Free download. Important for GS 3 agriculture topics.</p>
+        <span class="res-arrow">↗</span>
+      </a>
+    </div>
+    <div class="res-card">
+      <a href="https://mospi.gov.in" target="_blank" rel="noopener">
+        <span class="res-tag">OFFICIAL STATS</span>
+        <h4>MOSPI — National Statistics Office</h4>
+        <p>Official source for GDP, population, poverty, and economic data. Quote these in answers for credibility and marks.</p>
+        <span class="res-arrow">↗</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="alert tip rv">
+    <div class="alert-icon">📲</div>
+    <div class="alert-body">
+      <h4>APPS TO INSTALL ON YOUR PHONE RIGHT NOW</h4>
+      <p>ClearIAS App (free Prelims quizzes), ePathshala NCERT App, The Hindu app (₹5/day), Insights Daily Quiz (free), Drishti IAS App (free notes), UPSC Official App (for official notifications). These apps turn your commute into preparation time.</p>
+    </div>
+  </div>
+</section>
+
+<section id="resources-pyq" class="rv" style="padding-top:0;">
+  <div class="section-label">PREVIOUS YEAR PAPERS</div>
+  <h2>📃 Previous Year Question Papers — Free Downloads</h2>
+  <p>PYQs are your single best preparation resource. UPSC repeats concepts. Solve last 10 years of both Prelims and Mains PYQs topic-wise, not year-wise.</p>
+
+  <div class="res-grid">
+    <div class="res-card">
+      <a href="https://upsc.gov.in/examinations/previous-question-papers" target="_blank" rel="noopener">
+        <span class="res-tag">OFFICIAL SOURCE</span>
+        <h4>UPSC.gov.in — Official PYQ Papers</h4>
+        <p>Download all official Prelims and Mains question papers directly from UPSC's own website. The most reliable source.</p>
+        <span class="res-arrow">↗</span>
+      </a>
+    </div>
+    <div class="res-card">
+      <a href="https://www.clearias.com/upsc-previous-year-question-papers/" target="_blank" rel="noopener">
+        <span class="res-tag">ORGANIZED BY SUBJECT</span>
+        <h4>ClearIAS — PYQs Organized by Topic</h4>
+        <p>Prelims and Mains PYQs organized subject-wise with answers. Much more useful than year-wise solving.</p>
+        <span class="res-arrow">↗</span>
+      </a>
+    </div>
+    <div class="res-card">
+      <a href="https://www.insightsonindia.com/upsc-previous-year-papers/" target="_blank" rel="noopener">
+        <span class="res-tag">MAINS ANSWER KEYS</span>
+        <h4>Insights on India — Mains PYQs + Model Answers</h4>
+        <p>Mains PYQs with model answers and evaluations from past years. Essential for understanding what a good Mains answer looks like.</p>
+        <span class="res-arrow">↗</span>
+      </a>
+    </div>
+    <div class="res-card">
+      <a href="https://byjus.com/free-ias-prep/upsc-question-papers/" target="_blank" rel="noopener">
+        <span class="res-tag">WITH ANSWER KEYS</span>
+        <h4>BYJU'S — PYQs with Detailed Explanations</h4>
+        <p>Prelims PYQs from 2011–2024 with detailed explanations. Useful for understanding WHY an answer is correct.</p>
+        <span class="res-arrow">↗</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="resources-mock" class="rv" style="padding-top:0;">
+  <div class="section-label">TEST SERIES & MOCK TESTS</div>
+  <h2>🧪 Free & Affordable Mock Test Platforms</h2>
+
+  <div class="res-grid">
+    <div class="res-card">
+      <a href="https://www.clearias.com/upsc-prelims-online-mock-test/" target="_blank" rel="noopener">
+        <span class="res-tag">FREE PRELIMS MOCKS</span>
+        <h4>ClearIAS — Free Prelims Mock Tests</h4>
+        <p>Free online Prelims mock tests with negative marking. Good quality questions. Do 2–3 free tests before buying any paid test series.</p>
+        <span class="res-arrow">↗</span>
+      </a>
+    </div>
+    <div class="res-card">
+      <a href="https://forumias.com/blog/upsc-ias-prelims-test-series/" target="_blank" rel="noopener">
+        <span class="res-tag">MOST POPULAR PAID</span>
+        <h4>ForumIAS — Prelims + Mains Test Series</h4>
+        <p>India's most popular test series. Affordable pricing, excellent questions, peer benchmarking. Join 6 months before exam.</p>
+        <span class="res-arrow">↗</span>
+      </a>
+    </div>
+    <div class="res-card">
+      <a href="https://www.insightsonindia.com/ias-test-series/" target="_blank" rel="noopener">
+        <span class="res-tag">BEST FOR MAINS</span>
+        <h4>Insights on India — Mains Test Series</h4>
+        <p>Highly regarded Mains test series with human evaluation. Best for answer quality improvement. Join immediately after Prelims.</p>
+        <span class="res-arrow">↗</span>
+      </a>
+    </div>
+    <div class="res-card">
+      <a href="https://www.drishtiias.com/test-series" target="_blank" rel="noopener">
+        <span class="res-tag">HINDI + ENGLISH</span>
+        <h4>Drishti IAS — Test Series</h4>
+        <p>Available in Hindi and English. Good for Hindi medium aspirants. Comprehensive question bank with explanation.</p>
+        <span class="res-arrow">↗</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- PRELIMS -->
+<section id="prelims" class="rv">
+  <div class="section-label">STAGE 1</div>
+  <h2>Prelims Strategy — Clearing the Gateway</h2>
+
+  <div class="steps">
+    <div class="step rv"><div class="step-num"></div><div class="step-body"><h3>Negative Marking Psychology</h3><p>-0.66 per wrong answer. Never attempt with less than 60% confidence. If you eliminate 2 options confidently, attempt. If completely blind, skip. This discipline alone separates selectors from non-selectors.</p></div></div>
+    <div class="step rv"><div class="step-num"></div><div class="step-body"><h3>Solve All 10 Years of PYQs (Subject-wise)</h3><p>UPSC repeats concept-types not exact questions. Solve them subject-wise, not year-wise. This reveals UPSC's favourite angles on every topic. Download free from UPSC official site.</p></div></div>
+    <div class="step rv"><div class="step-num"></div><div class="step-body"><h3>Minimum 40 Full Mock Tests</h3><p>Working professional version: 1 full mock every Saturday from 6 months before exam. 24 weekends = 24 mocks minimum. Analyse every wrong answer — don't just note the score.</p></div></div>
+    <div class="step rv"><div class="step-num"></div><div class="step-body"><h3>Never Neglect CSAT</h3><p>Every year, brilliant aspirants fail Prelims only because of CSAT. You need 66/200. Practice reading comprehension and logical reasoning 20 minutes every Saturday morning without fail.</p></div></div>
+    <div class="step rv"><div class="step-num"></div><div class="step-body"><h3>Current Affairs = 40–50 Questions</h3><p>Read The Hindu daily. Use Insights Daily Quiz app for 10–15 questions during lunch. Monthly magazine from Vision IAS or Drishti. Tag every event to its GS paper topic.</p></div></div>
+  </div>
+</section>
+
+<!-- MAINS -->
+<section id="mains" class="rv">
+  <div class="section-label">STAGE 2</div>
+  <h2>Mains Strategy — Where Ranks Are Actually Decided</h2>
+
+  <blockquote>"Many aspirants read and revise endlessly but never practice writing. The examiner only sees your answer copy — not your bookshelf." <cite>— Consistent wisdom from UPSC AIR toppers</cite></blockquote>
+
+  <div class="card-grid rv">
+    <div class="card"><span class="c-icon">📐</span><h4>The Answer Structure Formula</h4><p><strong>Intro</strong> (define + contextualize, 2–3 lines) → <strong>Body</strong> (3–4 points with headings, data, examples) → <strong>Conclusion</strong> (forward-looking, solution-oriented). Follow this every single time.</p></div>
+    <div class="card"><span class="c-icon">⏱️</span><h4>Time Management</h4><p>250-word answer: ~7–8 min. 150-word answer: ~5 min. First 5 minutes: mentally plan all answers. Never overwrite on one question — move on.</p></div>
+    <div class="card"><span class="c-icon">📊</span><h4>Diagrams & Flowcharts</h4><p>A simple flowchart of policy implementation chain in GS3 can earn +2 marks. Practice 6–8 standard diagrams (water cycle, economic circle, governance structure).</p></div>
+    <div class="card"><span class="c-icon">🔗</span><h4>Integrate Current Affairs</h4><p>Every GS2 and GS3 answer needs 1 recent data point. "As per Economic Survey 2027..." instantly makes your answer examiner-friendly and contemporary.</p></div>
+    <div class="card"><span class="c-icon">⚖️</span><h4>Always Present Both Sides</h4><p>UPSC rewards nuance. For any debatable topic: present pros → cons → your balanced view. Never take extreme partisan positions.</p></div>
+    <div class="card"><span class="c-icon">📜</span><h4>Quote SC Judgements</h4><p>For rights, governance, and polity questions: citing Kesavananda Bharati, Puttaswamy, Vishaka, Shreya Singhal etc. instantly adds depth and marks.</p></div>
+  </div>
+
+  <div class="table-wrap rv">
+    <table>
+      <thead><tr><th>Paper</th><th>Key Focus</th><th>Target Score</th><th>Key Strategy</th></tr></thead>
+      <tbody>
+        <tr><td>Essay</td><td>Any philosophical or current topic</td><td>130–145/250</td><td>2 essays/week from Month 12. Multi-domain. Opening quote + data + vision conclusion.</td></tr>
+        <tr><td>GS 1</td><td>History, Geography, Society, World</td><td>110–125/250</td><td>Focus on causes/impacts. Use maps/timelines. Post-independence India is high yield.</td></tr>
+        <tr><td>GS 2</td><td>Polity, Governance, IR, Social Justice</td><td>120–135/250</td><td>Constitutional article in every answer. SC judgements. Policy examples with outcomes.</td></tr>
+        <tr><td>GS 3</td><td>Economy, Agriculture, Env, Security</td><td>115–130/250</td><td>Data-rich answers. Budget numbers. Technology examples. Solutions-focused conclusion.</td></tr>
+        <tr><td>GS 4 (Ethics)</td><td>Concepts, Case Studies, Thinkers</td><td>130–150/250</td><td>Ethics Notebook. Real admin examples. Work experience anecdotes. Balanced solutions.</td></tr>
+        <tr><td>Optional I + II</td><td>Your chosen optional</td><td>280–310/500</td><td>3+ revisions + PYQ writing + model answer comparison.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ETHICS -->
+<section id="ethics" class="rv">
+  <div class="section-label">GS PAPER 4</div>
+  <h2>Ethics — The Rank Booster Most Aspirants Underestimate</h2>
+  <p>As a working professional, you have real administrative experience that full-time student aspirants lack. Use this in Ethics. Real workplace dilemmas, observations of public systems, and experience with authority are goldmines for case study answers.</p>
+
+  <div class="card-grid rv">
+    <div class="card"><span class="c-icon">📓</span><h4>Maintain an Ethics Notebook</h4><p>Thinker quotes, real officer examples, key definitions, case study templates. Review this notebook every Friday evening. This is your secret weapon for 130+ score.</p></div>
+    <div class="card"><span class="c-icon">🏛️</span><h4>Thinkers to Master</h4><p>Gandhi (Truth, Service), Aristotle (Virtue Ethics), Kant (Duty), Rawls (Justice), Vivekananda, Kautilya (Arthashastra), Thiruvalluvar (Kural). Know 2–3 quotes from each.</p></div>
+    <div class="card"><span class="c-icon">⚙️</span><h4>Case Study Framework</h4><p>1) Identify all stakeholders, 2) Name ethical issues, 3) Present 3 options with pros/cons, 4) Choose balanced, legal, practical solution. Always be realistic — not idealistic.</p></div>
+    <div class="card"><span class="c-icon">💼</span><h4>Use Your Work Experience</h4><p>"In my work experience, I observed..." is a powerful way to ground your ethics answers in reality. UPSC values authentic, lived examples over textbook scenarios.</p></div>
+  </div>
+</section>
+
+<!-- ESSAY -->
+<section id="essay" class="rv">
+  <div class="section-label">ESSAY PAPER</div>
+  <h2>Essay Writing — 250 Marks, Often Neglected, Easily Scored</h2>
+
+  <div class="steps">
+    <div class="step"><div class="step-num"></div><div class="step-body"><h3>Spend 10 Minutes Planning Before Writing</h3><p>Create a mind map of your essay. 3 main pillars. Opening approach. Conclusion vision. Never start writing without a plan — it shows in structure and loses marks.</p></div></div>
+    <div class="step"><div class="step-num"></div><div class="step-body"><h3>Open with a Hook</h3><p>Powerful quote / striking statistic / rhetorical question / vivid scenario. The first paragraph determines if the examiner reads with curiosity or reluctance.</p></div></div>
+    <div class="step"><div class="step-num"></div><div class="step-body"><h3>Multi-Domain Integration</h3><p>For any topic: bring economy, society, governance, science, ethics, international dimensions. Examiners reward breadth of thinking. One-dimensional essays score poorly.</p></div></div>
+    <div class="step"><div class="step-num"></div><div class="step-body"><h3>Data = Credibility</h3><p>Collect 30–40 key statistics across all GS domains. "India's forest cover stands at 21.7% of geographical area" beats "India has significant forest cover" every time.</p></div></div>
+    <div class="step"><div class="step-num"></div><div class="step-body"><h3>Practice: 2 Full Essays Every Weekend</h3><p>From Month 12 onwards: write one full essay every Saturday, one every Sunday. In 18 months, you'll write 144 essays. Your own voice will emerge.</p></div></div>
+  </div>
+</section>
+
+<!-- INTERVIEW -->
+<section id="interview" class="rv">
+  <div class="section-label">FINAL STAGE</div>
+  <h2>Interview — 275 Marks, Your Personality on Trial</h2>
+
+  <div class="alert gold rv">
+    <div class="alert-icon">🎯</div>
+    <div class="alert-body">
+      <h4>WORKING PROFESSIONAL ADVANTAGE IN INTERVIEW</h4>
+      <p>Your work experience is a massive advantage in the interview. Real-world exposure to workplace ethics, administration, public interaction, and professional challenges makes your answers grounded and mature. Full-time students often sound bookish. You won't — if you leverage your experience confidently.</p>
+    </div>
+  </div>
+
+  <div class="steps rv">
+    <div class="step"><div class="step-num"></div><div class="step-body"><h3>Master Your DAF (Detailed Application Form)</h3><p>Generate 5–10 questions from every single line of your DAF. Why this optional? Why leave your job for civil service? What skills from your job are transferable to IAS? Prepare 1-min and 3-min answers for each.</p></div></div>
+    <div class="step"><div class="step-num"></div><div class="step-body"><h3>Know Your Home State Completely</h3><p>GDP, major industries, rivers, historical figures, tribal populations, current challenges, key government schemes implemented in your state. The board always asks about your home state.</p></div></div>
+    <div class="step"><div class="step-num"></div><div class="step-body"><h3>5–7 Mock Interviews Before the Real One</h3><p>With retired bureaucrats, academics, coaching panels. Record every mock. Watch yourself cold. Your body language, filler words, eye contact, and tone all matter enormously.</p></div></div>
+    <div class="step"><div class="step-num"></div><div class="step-body"><h3>Honesty Over Bluffing — Always</h3><p>"I'm not certain, but my understanding is..." is infinitely better than a confident wrong answer. The board respects intellectual honesty. They have decades of experience detecting bluffs.</p></div></div>
+  </div>
+</section>
+
+<!-- CURRENT AFFAIRS -->
+<section id="current" class="rv">
+  <div class="section-label">ONGOING PREPARATION</div>
+  <h2>Current Affairs — The Thread Through Everything</h2>
+
+  <div class="card-grid rv">
+    <div class="card"><span class="c-icon">📰</span><h4>Daily (30 min, Morning)</h4><p>The Hindu headlines + 1–2 editorials. Use app during morning routine. Focus: governance, economy, IR, environment. Skip sports, entertainment.</p></div>
+    <div class="card"><span class="c-icon">📱</span><h4>Lunch Break (15 min)</h4><p>Insights Daily Quiz app — 10 questions. ClearIAS current affairs notes. 1 editorial summary from Drishti IAS. Small daily doses compound into massive knowledge over 3 years.</p></div>
+    <div class="card"><span class="c-icon">🗂️</span><h4>Evening Session (45 min)</h4><p>Tag today's news to GS paper. Write 3–5 bullet point notes. Connect to static topic. Example: RBI rate change → link to Monetary Policy → GS3 Economy → write a fact note.</p></div>
+    <div class="card"><span class="c-icon">📑</span><h4>Monthly Magazine</h4><p>Vision IAS or Insights monthly magazine. Read every month. This consolidates 30 days of news into exam-ready format. The best way to review a whole month efficiently.</p></div>
+    <div class="card"><span class="c-icon">🏛️</span><h4>Government Sources (Weekly)</h4><p>PIB weekly digest, PRS Legislative Research (new bills), MOSPI data updates, Economic Survey chapters. These are UPSC's primary sources for questions.</p></div>
+    <div class="card"><span class="c-icon">🔄</span><h4>Sunday Consolidation (30 min)</h4><p>Review week's current affairs notes. Identify top 5 most important stories. Tag them to essay themes and interview topics. This weekly ritual prevents forgetting.</p></div>
+  </div>
+</section>
+
+<!-- TARGETS -->
+<section id="targets" class="rv">
+  <div class="section-label">OBC SCORE TARGETS</div>
+  <h2>Realistic Score Targets for OBC Selection</h2>
+  <p>OBC cut-off for selection is typically around 950–1000/2025. These are your ambitious but achievable targets that give you a comfortable selection buffer.</p>
+
+  <div style="max-width:680px;">
+    <div class="prog-item"><div class="prog-label"><span>Prelims GS1 (OBC cut-off ~85–95)</span><span>Target: 105+/200</span></div><div class="prog-bar"><div class="prog-fill fill-gold" style="width:52.5%"></div></div></div>
+    <div class="prog-item"><div class="prog-label"><span>CSAT (Need 66/200 to qualify)</span><span>Target: 110+/200</span></div><div class="prog-bar"><div class="prog-fill fill-green" style="width:55%"></div></div></div>
+    <div class="prog-item"><div class="prog-label"><span>Essay Paper</span><span>Target: 130–145/250</span></div><div class="prog-bar"><div class="prog-fill fill-blue" style="width:54%"></div></div></div>
+    <div class="prog-item"><div class="prog-label"><span>Mains GS 1 (History, Geo, Society)</span><span>Target: 115/250</span></div><div class="prog-bar"><div class="prog-fill fill-gold" style="width:46%"></div></div></div>
+    <div class="prog-item"><div class="prog-label"><span>Mains GS 2 (Polity, Governance, IR)</span><span>Target: 125/250</span></div><div class="prog-bar"><div class="prog-fill fill-blue" style="width:50%"></div></div></div>
+    <div class="prog-item"><div class="prog-label"><span>Mains GS 3 (Economy, Env, Security)</span><span>Target: 120/250</span></div><div class="prog-bar"><div class="prog-fill fill-green" style="width:48%"></div></div></div>
+    <div class="prog-item"><div class="prog-label"><span>Mains GS 4 Ethics (Rank Booster)</span><span>Target: 135+/250</span></div><div class="prog-bar"><div class="prog-fill fill-purple" style="width:54%"></div></div></div>
+    <div class="prog-item"><div class="prog-label"><span>Optional (Both Papers)</span><span>Target: 290–310/500</span></div><div class="prog-bar"><div class="prog-fill fill-red" style="width:60%"></div></div></div>
+    <div class="prog-item"><div class="prog-label"><span>Interview / Personality Test</span><span>Target: 185+/275</span></div><div class="prog-bar"><div class="prog-fill fill-gold" style="width:67%"></div></div></div>
+  </div>
+
+  <div class="alert gold rv" style="margin-top:1.5rem;">
+    <div class="alert-icon">🏆</div>
+    <div class="alert-body">
+      <h4>TOTAL TARGET: ~1100+ / 2025</h4>
+      <p>Essay(137) + GS1(115) + GS2(125) + GS3(120) + GS4(135) + Optional(300) + Interview(185) = 1117 marks. OBC selection cut-off is typically ~950–1000. You're targeting a 100–150 mark buffer — enough to secure a top service, not just selection.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WEEKLY CHECKLIST -->
+<section id="checklist" class="rv">
+  <div class="section-label">ACCOUNTABILITY</div>
+  <h2>Weekly Self-Evaluation Checklist (Review Every Sunday)</h2>
+
+  <div class="cl-grid">
+    <div class="cl-box">
+      <h3>📰 Current Affairs</h3>
+      <div class="ci" onclick="this.classList.toggle('checked')"><div class="box"></div>Read newspaper every morning (30 min)</div>
+      <div class="ci" onclick="this.classList.toggle('checked')"><div class="box"></div>Did lunch break quiz (15 min daily)</div>
+      <div class="ci" onclick="this.classList.toggle('checked')"><div class="box"></div>Made notes + tagged to GS paper</div>
+      <div class="ci" onclick="this.classList.toggle('checked')"><div class="box"></div>Reviewed at least 2 editorials</div>
+    </div>
+    <div class="cl-box">
+      <h3>📚 Static Study (Evening)</h3>
+      <div class="ci" onclick="this.classList.toggle('checked')"><div class="box"></div>Completed 20:00–20:45 study session 5/5 days</div>
+      <div class="ci" onclick="this.classList.toggle('checked')"><div class="box"></div>Completed 21:00–21:45 writing/notes session</div>
+      <div class="ci" onclick="this.classList.toggle('checked')"><div class="box"></div>Completed 22:00–22:45 current affairs session</div>
+      <div class="ci" onclick="this.classList.toggle('checked')"><div class="box"></div>Revised last week's notes at least once</div>
+    </div>
+    <div class="cl-box">
+      <h3>✍️ Writing Practice</h3>
+      <div class="ci" onclick="this.classList.toggle('checked')"><div class="box"></div>Wrote at least 3–5 Mains-style answers</div>
+      <div class="ci" onclick="this.classList.toggle('checked')"><div class="box"></div>Compared with model answers</div>
+      <div class="ci" onclick="this.classList.toggle('checked')"><div class="box"></div>Did 1 weekend essay practice</div>
+      <div class="ci" onclick="this.classList.toggle('checked')"><div class="box"></div>Added 1 entry to Ethics notebook</div>
+    </div>
+    <div class="cl-box">
+      <h3>💪 Health & Discipline</h3>
+      <div class="ci" onclick="this.classList.toggle('checked')"><div class="box"></div>Phone off during 20:00–23:00 study</div>
+      <div class="ci" onclick="this.classList.toggle('checked')"><div class="box"></div>Slept 7+ hours every night</div>
+      <div class="ci" onclick="this.classList.toggle('checked')"><div class="box"></div>Exercised at least 3 days</div>
+      <div class="ci" onclick="this.classList.toggle('checked')"><div class="box"></div>Did NOT compare progress with others</div>
+    </div>
+    <div class="cl-box">
+      <h3>🧪 Tests</h3>
+      <div class="ci" onclick="this.classList.toggle('checked')"><div class="box"></div>Took weekend mock test (if applicable)</div>
+      <div class="ci" onclick="this.classList.toggle('checked')"><div class="box"></div>Reviewed all wrong answers deeply</div>
+      <div class="ci" onclick="this.classList.toggle('checked')"><div class="box"></div>Solved 20+ PYQs on weak topics</div>
+    </div>
+    <div class="cl-box">
+      <h3>📋 Planning</h3>
+      <div class="ci" onclick="this.classList.toggle('checked')"><div class="box"></div>Planned next week's subject rotation</div>
+      <div class="ci" onclick="this.classList.toggle('checked')"><div class="box"></div>Checked monthly milestone progress</div>
+      <div class="ci" onclick="this.classList.toggle('checked')"><div class="box"></div>Identified 1 weak area to fix next week</div>
+      <div class="ci" onclick="this.classList.toggle('checked')"><div class="box"></div>Noted 1 thing I did well this week</div>
+    </div>
+  </div>
+</section>
+
+<!-- MISTAKES -->
+<section id="mistakes" class="rv">
+  <div class="section-label">AVOID THESE</div>
+  <h2>12 Mistakes Working Professionals Make That Kill UPSC Dreams</h2>
+
+  <div class="cl-grid">
+    <div class="cl-box">
+      <h3>📖 Study Mistakes</h3>
+      <div class="ci"><div class="box"></div>Skipping NCERTs, jumping to advanced books</div>
+      <div class="ci"><div class="box"></div>Buying 5 books per subject instead of 1 deeply</div>
+      <div class="ci"><div class="box"></div>Reading without making notes or revising</div>
+      <div class="ci"><div class="box"></div>Ignoring CSAT until 2 weeks before Prelims</div>
+      <div class="ci"><div class="box"></div>Not practising answer writing until Phase 4</div>
+    </div>
+    <div class="cl-box">
+      <h3>⏰ Time & Energy Mistakes</h3>
+      <div class="ci"><div class="box"></div>Studying while exhausted (after 23:00 always)</div>
+      <div class="ci"><div class="box"></div>Not protecting 20:00–23:00 as sacred time</div>
+      <div class="ci"><div class="box"></div>Spending weekend hours on social media instead</div>
+      <div class="ci"><div class="box"></div>Using commute time for entertainment, not learning</div>
+      <div class="ci"><div class="box"></div>Not using lunch breaks for 15-min quizzes</div>
+    </div>
+    <div class="cl-box">
+      <h3>🧠 Strategy Mistakes</h3>
+      <div class="ci"><div class="box"></div>Changing optional subject mid-preparation</div>
+      <div class="ci"><div class="box"></div>Quitting preparation after one bad mock score</div>
+    </div>
+  </div>
+</section>
+
+<!-- MINDSET -->
+<section id="mindset" class="rv">
+  <div class="section-label">THE INNER GAME</div>
+  <h2>Mental Health & Burnout Prevention</h2>
+
+  <div class="card-grid rv">
+    <div class="card"><span class="c-icon">🔥</span><h4>Burnout is a Real Threat</h4><p>Working full time + studying 3 hours/day for 3 years is genuinely demanding. Protect one full day per week (Sunday afternoon) as a complete rest day. No study, no guilt.</p></div>
+    <div class="card"><span class="c-icon">👨‍👩‍👧</span><h4>Family Communication</h4><p>Have an honest conversation with family about your 3-year plan and the sacrifices involved. Their understanding and support will be critical during low phases.</p></div>
+    <div class="card"><span class="c-icon">🚫</span><h4>Social Media = Time Theft</h4><p>Delete Instagram, Facebook, YouTube (except UPSC channels). Limit WhatsApp to family groups. Just 1 hour of social media saved daily = 180 hours over 6 months.</p></div>
+    <div class="card"><span class="c-icon">📉</span><h4>Handle Bad Days Correctly</h4><p>Low mock score? Can't retain anything? Take a walk. Read a topper's journey. Revisit your WHY note. Never make permanent decisions (quitting preparation) on bad days.</p></div>
+    <div class="card"><span class="c-icon">🏃</span><h4>Physical Activity is Performance</h4><p>Exercise 4+ days/week even if just 20 minutes. It improves memory consolidation, reduces stress, and boosts mood. Your brain performs better after physical activity.</p></div>
+    <div class="card"><span class="c-icon">📝</span><h4>Your WHY Note</h4><p>On Day 1, write a half-page answer: WHY do you want to become an IAS/IPS officer? What will you change? Which district will you transform? Reread this every time motivation dips.</p></div>
+  </div>
+</section>
+
+<!-- GOLDEN RULES -->
+<section id="rules" class="rv">
+  <div class="section-label">THE COMMANDMENTS</div>
+  <h2>10 Golden Rules for Working Professional UPSC Success</h2>
+
+  <div class="steps">
+    <div class="step rv"><div class="step-num"></div><div class="step-body"><h3>3 Focused Hours Beat 8 Distracted Hours</h3><p>Your 3 hours are sacred. Phone off. Door closed. Zero interruptions. A working professional who masters deep work beats any full-time aspirant who studies casually.</p></div></div>
+    <div class="step rv"><div class="step-num"></div><div class="step-body"><h3>Revise More Than You Read</h3><p>Reading Laxmikanth once is worth less than reading it four times. UPSC rewards what you remember on exam day, not what you've merely encountered once.</p></div></div>
+    <div class="step rv"><div class="step-num"></div><div class="step-body"><h3>Use Every Stolen Minute</h3><p>Commute + lunch + morning = 60–90 extra minutes daily. That's 500+ hours over 3 years. Newspaper, quiz app, podcast. Never waste this time.</p></div></div>
+    <div class="step rv"><div class="step-num"></div><div class="step-body"><h3>Write Every Single Day</h3><p>Even during weekdays, write at least one Mains-style answer in your 21:00 session. 3 answers/weekday + 10 answers/weekend = 975 answers over 3 years. You WILL become a great writer.</p></div></div>
+    <div class="step rv"><div class="step-num"></div><div class="step-body"><h3>PYQs Are Sacred</h3><p>Every single Prelims and Mains PYQ from the last 10 years. UPSC repeats themes, perspectives, and angles. Download them free from UPSC official site and solve them subject-wise.</p></div></div>
+    <div class="step rv"><div class="step-num"></div><div class="step-body"><h3>Your Work Experience Is a Gift</h3><p>Colleagues, workplace ethical dilemmas, observations of public systems — these are your Mains answer examples and interview stories. Full-time students cannot compete with your real-world depth.</p></div></div>
+    <div class="step rv"><div class="step-num"></div><div class="step-body"><h3>Stick to ONE Plan</h3><p>A mediocre plan executed perfectly beats a brilliant plan abandoned halfway. Set your strategy. Follow it. Do not change direction every month based on forum posts.</p></div></div>
+    <div class="step rv"><div class="step-num"></div><div class="step-body"><h3>CSAT Is Not Optional</h3><p>Practice reading comprehension and logical reasoning every Saturday morning. No exceptions. It is a qualifying paper, but it's one people fail every year.</p></div></div>
+    <div class="step rv"><div class="step-num"></div><div class="step-body"><h3>2028 Is the Right Year</h3><p>26 months of thorough, focused preparation is better than a rushed attempt. You're not behind — you started in March 2026 with clarity and a real plan. That is already ahead of most aspirants.</p></div></div>
+    <div class="step rv"><div class="step-num"></div><div class="step-body"><h3>Never Give Up Before Selection Day</h3><p>The discipline and knowledge you build over these 26 months transforms your thinking, your career, and your life regardless of outcome. The journey itself makes you better. The destination will follow.</p></div></div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<section class="rv" style="text-align:center;padding:3.5rem 2rem;">
+  <div class="section-label" style="justify-content:center;">BEGIN TODAY</div>
+  <h2 style="max-width:700px;margin:0 auto 1.2rem;">The Blueprint Is Complete. Now the Work Begins.</h2>
+  <p style="max-width:580px;margin:0 auto 1.5rem;color:var(--muted);">There are no more secrets. You know what to study, when to study, how much to study, where to get resources, and how to manage your energy as a working professional. The only variable left is consistency.</p>
+  <blockquote style="max-width:650px;margin:0 auto 2rem;text-align:left;">"The IAS officer who transforms a district didn't start with talent. They started with a decision to show up every day for years." <cite>— Collective wisdom of 1000+ UPSC toppers</cite></blockquote>
+  <div class="hero-stats" style="justify-content:center;">
+    <div class="stat"><span class="stat-num" style="font-size:1.4rem;">Mar 2026</span><span class="stat-label">Start Date</span></div>
+    <div class="stat"><span class="stat-num" style="font-size:1.4rem;">May 2028</span><span class="stat-label">Prelims</span></div>
+    <div class="stat"><span class="stat-num" style="font-size:1.4rem;">Feb 2029</span><span class="stat-label">IAS / IPS</span></div>
+  </div>
+</section>
+
+<footer>
+  <div style="font-size:1.1rem;font-family:'Playfair Display',serif;color:var(--gold);margin-bottom:0.5rem;">All the best, <span>Pramod</span>. 🎯</div>
+  <div>You've got the plan. Now go make it happen.</div>
+</footer>
+
+</main>
+</div>
+
+<script>
+// Progress bar
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  document.getElementById('pgbar').style.width=(window.scrollY/(h.scrollHeight-h.clientHeight)*100)+'%';
+});
+
+// Sidebar toggle
+const sidebar=document.getElementById('sidebar');
+const mainEl=document.getElementById('main');
+const btn=document.getElementById('sidebar-toggle');
+let sidebarOpen=window.innerWidth>900;
+function updateSidebar(){
+  if(window.innerWidth>900){
+    sidebar.classList.remove('hidden','visible');
+    mainEl.classList.remove('full');
+    if(!sidebarOpen){sidebar.classList.add('hidden');mainEl.classList.add('full');}
+  } else {
+    sidebar.classList.remove('hidden');
+    mainEl.classList.add('full');
+    if(sidebarOpen){sidebar.classList.add('visible');}
+    else{sidebar.classList.remove('visible');}
+  }
+}
+btn.addEventListener('click',()=>{
+  sidebarOpen=!sidebarOpen;
+  updateSidebar();
+});
+window.addEventListener('resize',()=>updateSidebar());
+updateSidebar();
+
+// Close sidebar on mobile link click
+document.querySelectorAll('.sb-item').forEach(item=>{
+  item.addEventListener('click',()=>{
+    if(window.innerWidth<=900){sidebarOpen=false;updateSidebar();}
+  });
+});
+
+// Active sidebar tracking
+const sections=document.querySelectorAll('section[id], div[id]');
+const sbItems=document.querySelectorAll('.sb-item');
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      sbItems.forEach(a=>{
+        a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id);
+      });
+    }
+  });
+},{threshold:0.3,rootMargin:'-10% 0px -60% 0px'});
+sections.forEach(s=>io.observe(s));
+
+// Reveal on scroll
+const rv=document.querySelectorAll('.rv');
+const rvo=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');rvo.unobserve(e.target);}});
+},{threshold:0.07,rootMargin:'0px 0px -30px 0px'});
+rv.forEach(el=>rvo.observe(el));
+
+// Animate progress bars
+const prog=document.querySelectorAll('.prog-fill');
+const po=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const w=e.target.style.width;
+      e.target.style.width='0%';
+      setTimeout(()=>{e.target.style.width=w;},200);
+      po.unobserve(e.target);
+    }
+  });
+},{threshold:0.5});
+prog.forEach(p=>po.observe(p));
+</script>
+</body>
+</html>
